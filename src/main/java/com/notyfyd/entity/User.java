@@ -8,7 +8,8 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "firstName")
+//    @Column(name = "firstName")
+//    @Column(name = "name")
     private String firstName;
     private String lastName;
     private String mobile;
