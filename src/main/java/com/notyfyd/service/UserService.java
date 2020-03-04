@@ -22,8 +22,10 @@ public class UserService {
             user.setLastName(model.getLastName());
             user.setMobile(model.getMobile());
             user.setEmail(model.getEmail());
-            userRepository.save(user);
-            return ResponseEntity.ok("userCreated Successfully");
+            User savedUser = userRepository.save(user);
+            if(userRepository.findById(savedUser.getId()).isPresent())
+            return ResponseEntity.ok("User Created Successfully");
+            else return ResponseEntity.unprocessableEntity().body("Failed Creating User as Specified");
         }
 
     }
