@@ -1,19 +1,36 @@
 package com.notyfyd.service;
 
 import com.notyfyd.entity.Role;
+import com.notyfyd.entity.User;
 import com.notyfyd.repository.RoleRepository;
+import com.notyfyd.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RoleService {
-    @Autowired
+
     private RoleRepository roleRepository;
-    public ResponseEntity<Object> addRole(Role role) {
+
+    private UserRepository userRepository;
+
+    public RoleService(RoleRepository roleRepository, UserRepository userRepository) {
+        this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
+    }
+
+    /** Create a new role along with users */
+
+    public ResponseEntity<Object> addRole(Role role)  {
+
         Role newRole = new Role();
         newRole.setName(role.getName());
         newRole.setDescription(role.getDescription());
+
+
+
         newRole.setUsers(role.getUsers());
         Role savedRole = roleRepository.save(newRole);
         if(roleRepository.findById(savedRole.getId()).isPresent()) {
@@ -21,6 +38,7 @@ public class RoleService {
         } else
             return ResponseEntity.unprocessableEntity().body("Failed to Create specified Role");
     }
+    /** Delete a specified role given the id */
     public ResponseEntity<Object> deleteRole(Long id) {
         if(roleRepository.findById(id).isPresent()){
             roleRepository.deleteById(id);
@@ -31,4 +49,8 @@ public class RoleService {
             return ResponseEntity.unprocessableEntity().body("No Records Found");
     }
 
+
 }
+
+
+

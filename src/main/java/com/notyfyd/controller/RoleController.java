@@ -9,11 +9,16 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class RoleController {
-    @Autowired
+
     private RoleService roleService;
+
+    public RoleController(RoleService roleService) {
+        this.roleService = roleService;
+    }
+
     @PostMapping("/role/create")
     public ResponseEntity<Object> createRole(@RequestBody Role role) {
-        return  roleService.addRole(role);
+            return  roleService.addRole(role);
     }
     @DeleteMapping("/role/delete/{id}")
     public ResponseEntity<Object> deleteRole(@PathVariable Long id) {
