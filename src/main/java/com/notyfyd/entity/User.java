@@ -1,6 +1,10 @@
 package com.notyfyd.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "t_user")
@@ -13,7 +17,21 @@ public class User {
     private String mobile;
     @Column(unique = true)
     private String email;
+    @Transient
+    private String roleName;
+//    @JsonBackReference
 
+//    @JsonIgnore
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Role role;
+
+    public Role getRole() {
+        return role;
+    }
+    public void setRole(Role role) {
+        this.role = role;
+    }
     public Long getId() {
         return id;
     }
@@ -44,4 +62,12 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getRoleName() {
+        return getRole().getName();
+    }
+
+//    public void setRoleName(String roleName) {
+//        this.roleName = roleName;
+//    }
 }

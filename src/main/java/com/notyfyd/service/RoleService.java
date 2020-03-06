@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class RoleService {
 
@@ -23,20 +26,22 @@ public class RoleService {
 
     /** Create a new role along with users */
 
+    @Transactional
     public ResponseEntity<Object> addRole(Role role)  {
-
         Role newRole = new Role();
         newRole.setName(role.getName());
         newRole.setDescription(role.getDescription());
-
-
-
-        newRole.setUsers(role.getUsers());
         Role savedRole = roleRepository.save(newRole);
         if(roleRepository.findById(savedRole.getId()).isPresent()) {
-            return ResponseEntity.accepted().body("Successfully Created Role and Users");
-        } else
-            return ResponseEntity.unprocessableEntity().body("Failed to Create specified Role");
+            List<User> userList = new ArrayList<>();
+            for(int i=0; i <  role.getUsers().size(); i++) {
+                User newUser = role.getUsers().get(i);
+                newUser.setRole(savedRole);
+                User savedUser = userRepository.save(newUser);
+                if(!userRepository.findById(savedUser.getId()).isPresent())
+                    return ResponseEntity.accepted().body("Successfully Created Role and Users");
+            }return ResponseEntity.accepted().body("Successfully Created Role and Users");
+        } else return ResponseEntity.unprocessableEntity().body("Failed to Create specified Role");
     }
     /** Delete a specified role given the id */
     public ResponseEntity<Object> deleteRole(Long id) {
@@ -48,6 +53,7 @@ public class RoleService {
         } else
             return ResponseEntity.unprocessableEntity().body("No Records Found");
     }
+
 
 
 }

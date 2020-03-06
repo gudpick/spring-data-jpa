@@ -1,10 +1,13 @@
 package com.notyfyd.model;
 
+import com.notyfyd.entity.Role;
+
 public class UserModel {
     private String firstName;
     private String lastName;
     private String mobile;
     private String email;
+    private Role role;
 
     public String getFirstName() {
         return firstName;
@@ -36,5 +39,13 @@ public class UserModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
