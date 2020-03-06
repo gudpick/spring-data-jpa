@@ -1,15 +1,12 @@
 package com.notyfyd.controller;
 
-import com.notyfyd.entity.User;
 import com.notyfyd.model.UserModel;
-import com.notyfyd.repository.RoleRepository;
 import com.notyfyd.repository.UserRepository;
 import com.notyfyd.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserController {
@@ -23,15 +20,8 @@ public class UserController {
     }
 
     @PostMapping("/user/create")
-    public ResponseEntity<Object> createUser(@RequestBody User user) {
+    public ResponseEntity<Object> createUser(@RequestBody UserModel user) {
         return userService.createUser(user);
     }
-    @GetMapping("/user/details/{id}")
-    public User getUser(@PathVariable Long id) {
-        return userRepository.findById(id).get();
-    }
-    @GetMapping("/user/all")
-    public List<User> getAll(){
-        return userRepository.findAll();
-    }
+
 }

@@ -40,7 +40,8 @@ public class RoleService {
                 User savedUser = userRepository.save(newUser);
                 if(!userRepository.findById(savedUser.getId()).isPresent())
                     return ResponseEntity.accepted().body("Successfully Created Role and Users");
-            }return ResponseEntity.accepted().body("Successfully Created Role and Users");
+            }
+            return ResponseEntity.accepted().body("Successfully Created Role and Users");
         } else return ResponseEntity.unprocessableEntity().body("Failed to Create specified Role");
     }
     /** Delete a specified role given the id */

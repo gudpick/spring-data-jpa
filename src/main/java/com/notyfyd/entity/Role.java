@@ -1,11 +1,9 @@
 package com.notyfyd.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
+
+
 
 @Entity
 @Table(name = "t_role")
@@ -15,10 +13,6 @@ public class Role {
     private Long id;
     private String name;
     private String description;
-
-
-//   @JsonIgnore
-    @JsonManagedReference
     @OneToMany(targetEntity = User.class,  mappedBy = "role")
     private List<User> users;
     public Long getId() {
@@ -46,6 +40,22 @@ public class Role {
         this.users = users;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//   @JsonIgnore
 //    @JsonManagedReference
 //,  cascade = CascadeType.ALL
 //    , orphanRemoval = true

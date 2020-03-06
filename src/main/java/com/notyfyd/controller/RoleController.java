@@ -3,11 +3,8 @@ package com.notyfyd.controller;
 import com.notyfyd.entity.Role;
 import com.notyfyd.repository.RoleRepository;
 import com.notyfyd.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RestController
@@ -34,8 +31,5 @@ public class RoleController {
     public Role getRole(@PathVariable Long  id) {
         return roleRepository.findById(id).get();
     }
-    @GetMapping("/role/all")
-    public List<Role> getAllRoles() {
-        return roleRepository.findAll();
-    }
+
 }
