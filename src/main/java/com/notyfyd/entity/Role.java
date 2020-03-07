@@ -13,7 +13,7 @@ public class Role {
     private Long id;
     private String name;
     private String description;
-    @OneToMany(targetEntity = User.class,  mappedBy = "role")
+    @OneToMany(targetEntity = User.class,  mappedBy = "role" , cascade =  CascadeType.ALL)
     private List<User> users;
     public Long getId() {
         return this.id;
