@@ -27,9 +27,6 @@ public class RoleController {
         return roleService.deleteRole(id);
     }
 
-    @GetMapping("/role/details/{id}")
-    public Role getRole(@PathVariable Long  id) {
-        return roleRepository.findById(id).get();
-    }
+
 
 }

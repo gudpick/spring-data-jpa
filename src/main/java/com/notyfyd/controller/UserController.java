@@ -1,12 +1,11 @@
 package com.notyfyd.controller;
 
+import com.notyfyd.entity.User;
 import com.notyfyd.model.UserModel;
 import com.notyfyd.repository.UserRepository;
 import com.notyfyd.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -23,5 +22,7 @@ public class UserController {
     public ResponseEntity<Object> createUser(@RequestBody UserModel user) {
         return userService.createUser(user);
     }
+
+
 
 }
