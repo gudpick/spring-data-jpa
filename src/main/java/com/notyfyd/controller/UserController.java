@@ -7,6 +7,8 @@ import com.notyfyd.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class UserController {
 
@@ -22,6 +24,18 @@ public class UserController {
     public ResponseEntity<Object> createUser(@RequestBody UserModel user) {
         return userService.createUser(user);
     }
+    @GetMapping("/user/details/{id}")
+    public User getUser(@PathVariable Long id) {
+        if(userRepository.findById(id).isPresent())
+        return userRepository.findById(id).get();
+        else return  null;
+    }
+    @GetMapping("/user/all")
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+
 
 
 

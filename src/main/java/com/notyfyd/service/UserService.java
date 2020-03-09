@@ -28,6 +28,7 @@ public class UserService {
             user.setLastName(model.getLastName());
             user.setMobile(model.getMobile());
             user.setEmail(model.getEmail());
+            user.setRole(model.getRole());
 
             User savedUser = userRepository.save(user);
             if (userRepository.findById(savedUser.getId()).isPresent())
@@ -36,15 +37,7 @@ public class UserService {
         }
     }
 
-    public ResponseEntity<Object> deleteRole(Long id) {
-        if (roleRepository.findById(id).isPresent()) {
-            roleRepository.deleteById(id);
-            if (roleRepository.findById(id).isPresent()) {
-                return ResponseEntity.unprocessableEntity().body("Failed to delete the specified record");
-            } else return ResponseEntity.ok().body("Successfully deleted specified record");
-        } else
-            return ResponseEntity.unprocessableEntity().body("No Records Found");
-    }
+
 }
 
 

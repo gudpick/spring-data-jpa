@@ -1,5 +1,7 @@
 package com.notyfyd.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -7,14 +9,15 @@ import java.util.List;
 
 @Entity
 @Table(name = "t_role")
-public class Role {
+public class Role    {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
     @JoinColumn(name = "role_id")
-    @OneToMany(targetEntity = User.class,  cascade =  CascadeType.ALL )
+    @OneToMany(targetEntity = User.class, cascade = CascadeType.ALL)
+
     private List<User> users;
     public Long getId() {
         return this.id;
