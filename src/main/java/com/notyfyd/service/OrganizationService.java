@@ -34,7 +34,7 @@ public class OrganizationService {
         if(organizationRepository.findById(id).isPresent()) {
             Organization organization = organizationRepository.findById(id).get();
             organization.setName(org.getName());
-            organization.setOrgId(org.getName());
+            organization.setOrgId(org.getOrgId());
             addressRepository.deleteById(organization.getAddress().getId());
             organization.setAddress(org.getAddress());
             Organization savedOrganization = organizationRepository.save(organization);
