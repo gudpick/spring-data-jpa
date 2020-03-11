@@ -44,9 +44,9 @@ public class UserService {
         if(userRepository.findById(id).isPresent()) {
             User newUser = userRepository.findById(id).get();
             for(int i=0; i< user.getRole().size(); i++){
-                if(roleRepository.findById(user.getRole().get(i).getId()).isPresent()){
-                    roleRepository.deleteById(user.getRole().get(i).getId());
-                    if(roleRepository.findById(user.getRole().get(i).getId()).isPresent())
+                if(roleRepository.findById(newUser.getRole().get(i).getId()).isPresent()){
+                    roleRepository.deleteById(newUser.getRole().get(i).getId());
+                    if(roleRepository.findById(newUser.getRole().get(i).getId()).isPresent())
                         return ResponseEntity.unprocessableEntity().body("Failed to update user");
                 }
             }
