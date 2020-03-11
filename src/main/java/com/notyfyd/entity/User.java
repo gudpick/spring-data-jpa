@@ -17,15 +17,15 @@ public class User  {
     @Column(unique = true)
     private String email;
     @ManyToMany(targetEntity = Role.class,cascade = CascadeType.ALL)
-    private List<Role> role;
+    private List<Role> roles;
 
 
-    public List<Role> getRole() {
-        return role;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(List<Role> role) {
-        this.role = role;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public Long getId() {

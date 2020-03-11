@@ -22,14 +22,13 @@ public class UserService {
     public ResponseEntity<Object> createUser(User model) {
         User user = new User();
         if (userRepository.findByEmail(model.getEmail()).isPresent()) {
-            System.out.println("The email is already present");
             return ResponseEntity.badRequest().body("The Email is already Present, Failed to Create new User");
         } else {
             user.setFirstName(model.getFirstName());
             user.setLastName(model.getLastName());
             user.setMobile(model.getMobile());
             user.setEmail(model.getEmail());
-            user.setRole(model.getRole());
+            user.setRoles(model.getRoles());
 
             User savedUser = userRepository.save(user);
             if (userRepository.findById(savedUser.getId()).isPresent())
@@ -43,10 +42,10 @@ public class UserService {
     public ResponseEntity<Object> updateUser(User user, Long id) {
         if(userRepository.findById(id).isPresent()) {
             User newUser = userRepository.findById(id).get();
-            for(int i=0; i< user.getRole().size(); i++){
-                if(roleRepository.findById(newUser.getRole().get(i).getId()).isPresent()){
-                    roleRepository.deleteById(newUser.getRole().get(i).getId());
-                    if(roleRepository.findById(newUser.getRole().get(i).getId()).isPresent())
+            for(int i=0; i< user.getRoles().size(); i++){
+                if(roleRepository.findById(newUser.getRoles().get(i).getId()).isPresent()){
+                    roleRepository.deleteById(newUser.getRoles().get(i).getId());
+                    if(roleRepository.findById(newUser.getRoles().get(i).getId()).isPresent())
                         return ResponseEntity.unprocessableEntity().body("Failed to update user");
                 }
             }
@@ -54,7 +53,7 @@ public class UserService {
             newUser.setLastName(user.getLastName());
             newUser.setMobile(user.getMobile());
             newUser.setEmail(user.getEmail());
-            newUser.setRole(user.getRole());
+            newUser.setRoles(user.getRoles());
             User savedUser = userRepository.save(newUser);
             if(userRepository.findById(savedUser.getId()).isPresent())
                 return  ResponseEntity.accepted().body("User updated successfully");

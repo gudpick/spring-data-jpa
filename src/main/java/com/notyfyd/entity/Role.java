@@ -38,20 +38,3 @@ public class Role    {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-//    @JoinColumn(name= "role_id")
-//   @JsonIgnore
-//    @JsonManagedReference
-//,  cascade = CascadeType.ALL
-//    , orphanRemoval = true
