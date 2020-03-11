@@ -15,10 +15,7 @@ public class Role    {
     private Long id;
     private String name;
     private String description;
-    @JoinColumn(name = "role_id")
-    @OneToMany(targetEntity = User.class, cascade = CascadeType.ALL)
 
-    private List<User> users;
     public Long getId() {
         return this.id;
     }
@@ -37,12 +34,7 @@ public class Role    {
     public void setDescription(String description) {
         this.description = description;
     }
-    public List<User> getUsers() {
-        return users;
-    }
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
+
 }
 
 

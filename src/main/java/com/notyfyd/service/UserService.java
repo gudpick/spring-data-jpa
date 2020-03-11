@@ -1,24 +1,25 @@
 package com.notyfyd.service;
 
-import com.notyfyd.entity.Role;
 import com.notyfyd.entity.User;
-import com.notyfyd.model.UserModel;
 import com.notyfyd.repository.RoleRepository;
 import com.notyfyd.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
 
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
     private RoleRepository roleRepository;
 
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+    }
 
-    public ResponseEntity<Object> createUser(UserModel model) {
+    public ResponseEntity<Object> createUser(User model) {
         User user = new User();
         if (userRepository.findByEmail(model.getEmail()).isPresent()) {
             System.out.println("The email is already present");
@@ -38,6 +39,37 @@ public class UserService {
     }
 
 
+    @Transactional
+    public ResponseEntity<Object> updateUser(User user, Long id) {
+        if(userRepository.findById(id).isPresent()) {
+            User newUser = userRepository.findById(id).get();
+            for(int i=0; i< user.getRole().size(); i++){
+                if(roleRepository.findById(user.getRole().get(i).getId()).isPresent()){
+                    roleRepository.deleteById(user.getRole().get(i).getId());
+                    if(roleRepository.findById(user.getRole().get(i).getId()).isPresent())
+                        return ResponseEntity.unprocessableEntity().body("Failed to update user");
+                }
+            }
+            newUser.setFirstName(user.getFirstName());
+            newUser.setLastName(user.getLastName());
+            newUser.setMobile(user.getMobile());
+            newUser.setEmail(user.getEmail());
+            newUser.setRole(user.getRole());
+            User savedUser = userRepository.save(newUser);
+            if(userRepository.findById(savedUser.getId()).isPresent())
+                return  ResponseEntity.accepted().body("User updated successfully");
+            else return ResponseEntity.unprocessableEntity().body("Failed updating the user specified");
+        } else return ResponseEntity.unprocessableEntity().body("Cannot find the user specified");
+    }
+
+    public ResponseEntity<Object> deleteUser(Long id) {
+        if (userRepository.findById(id).isPresent()) {
+            userRepository.deleteById(id);
+            if (userRepository.findById(id).isPresent())
+                return ResponseEntity.unprocessableEntity().body("Failed to Delete the specified User");
+            else return ResponseEntity.ok().body("Successfully deleted the specified user");
+        } else return ResponseEntity.badRequest().body("Cannot find the user specified");
+    }
 }
 
 
