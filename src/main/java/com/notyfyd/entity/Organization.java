@@ -1,5 +1,8 @@
 package com.notyfyd.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +14,7 @@ public class Organization {
     private String name;
     private String orgId;
     @OneToOne(targetEntity = Address.class, cascade = CascadeType.ALL)
+    @JsonBackReference
     private Address address;
     public Long getId() {
         return this.id;
