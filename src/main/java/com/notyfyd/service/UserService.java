@@ -3,7 +3,6 @@ package com.notyfyd.service;
 import com.notyfyd.entity.User;
 import com.notyfyd.repository.RoleRepository;
 import com.notyfyd.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +17,7 @@ public class UserService {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
-
+/** Create a new User */
     public ResponseEntity<Object> createUser(User model) {
         User user = new User();
         if (userRepository.findByEmail(model.getEmail()).isPresent()) {
@@ -37,7 +36,7 @@ public class UserService {
         }
     }
 
-
+/** Update an Existing User */
     @Transactional
     public ResponseEntity<Object> updateUser(User user, Long id) {
         if(userRepository.findById(id).isPresent()) {
@@ -60,7 +59,7 @@ public class UserService {
             else return ResponseEntity.unprocessableEntity().body("Failed updating the user specified");
         } else return ResponseEntity.unprocessableEntity().body("Cannot find the user specified");
     }
-
+/** Delete an User*/
     public ResponseEntity<Object> deleteUser(Long id) {
         if (userRepository.findById(id).isPresent()) {
             userRepository.deleteById(id);
@@ -94,16 +93,3 @@ public class UserService {
 
 
 
-//    public UserModel getUser(Long id) {
-//        User user = userRepository.findById(id).get();
-//        UserModel model = new UserModel();
-//        model.setFirstName(user.getFirstName());
-//        model.setLastName(user.getLastName());
-//        model.setMobile(user.getMobile());
-//        model.setEmail(user.getEmail());
-//        Role newRole = new Role();
-//        newRole.setName(user.getRole().getName());
-//        newRole.setDescription(user.getRole().getDescription());
-//        model.setRole(newRole);
-//        return model;
-//    }
